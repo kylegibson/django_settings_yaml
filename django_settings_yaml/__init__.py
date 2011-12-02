@@ -12,9 +12,6 @@ import os
 DEFAULT_ENV_PREFIX = "DJANGO_SETTINGS_ENV_"
 SECRET_KEY_FILE = "secret_key_file"
 
-def apply_context_to_yaml(stream, context):
-    return ""
-
 def load_yaml_settings(context, files):
     settings = {}
     for p in files:
@@ -26,14 +23,14 @@ def load_yaml_settings(context, files):
 
 def read_write_secret_key_file(settings):
     try:
-        with open(SECRET_KEY_FILE) as rfd:
+        with open(settings[SECRET_KEY_FILE]) as rfd:
             settings["secret_key"] = rfd.read().strip()
         return settings["secret_key"]
     except IOError:
         try:
             from random import choice
             settings["secret_key"] = ''.join([choice(string.letters + string.digits + string.punctuation) for i in range(50)])
-            with open(SECRET_KEY_FILE, "w") as wfd:
+            with open(settings[SECRET_KEY_FILE], "w") as wfd:
                 wfd.write(settings["secret_key"])
         except IOError:
             pass
