@@ -1,0 +1,8 @@
+*.egg-info
+MANIFEST
+dist
+build
+venv
+*.swp
+*.pyc
+*/version.py
