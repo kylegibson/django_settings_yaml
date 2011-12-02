@@ -1,0 +1,71 @@
+<h1>django-settings-yaml</h1>
+<h2>Overview</h2>
+<p>This is a django plugin that you can use to load django settings in 
+from a YAML source and the shell environment</p>
+<h2>Installation</h2>
+<h3>From development source</h3>
+<pre><code>pip install git://github.com/kylegibson/django_settings_yaml.git#egg=django_settings_yaml
+</code></pre>
+<h3>From download tarball</h3>
+<pre><code>pip install django-settings-yaml-X.X.tar.gz
+</code></pre>
+<h3>Features</h3>
+<h4>PythonPath manipulation</h4>
+<p>A "pythonpath" list can be provided within the yaml. Paths will be appended to sys.path.</p>
+<h4>Template variables</h4>
+<p>Provide a context dictionary to specify how to process template variables within the document.</p>
+<h4>Automatic uppercasing</h4>
+<p>The loader will automatically uppercase all dictionary keys.</p>
+<h4>Keep your secret_key secret</h4>
+<p>Instead of specifying a SECRET_KEY in your settings, you can specify a SECRET_KEY_FILE. This is a path
+to a file that contains your secret key. If it doesn't exist, a new one is generated. </p>
+<h3>How To Use</h3>
+<h4>Create a settings.py</h4>
+<pre><code>import django_settings_yaml
+from path import path
+context = {
+    "PROJECT_ROOT" : path(__file__).abspath().dirname()
+}
+settings = django_settings_yaml.load(context, ["settings.yaml"])
+globals().update(settings)
+</code></pre>
+<h4>Create a settings.yaml</h4>
+<pre><code>pythonpath:
+  - $PROJECT_ROOT/apps
+debug: False
+secret_key_file: $PROJECT_ROOT/SECRET_KEY
+root_urlconf: urls
+databases:
+    default:
+        engine: django.db.backends.sqlite3
+        name: db/dev.db
+time_zone: America/Detroit
+site_id: 1
+use_i18n: False
+# use_l10n: False
+static_root: $PROJECT_ROOT/staticroot
+static_url: /static/
+admin_media_prefix: /static/admin/
+short_date_format: Y-m-d
+staticfiles_dirs:
+    - $PROJECT_ROOT/static
+staticfiles_finders:
+    - django.contrib.staticfiles.finders.FileSystemFinder
+    - django.contrib.staticfiles.finders.AppDirectoriesFinder
+template_dirs:
+    - $PROJECT_ROOT/apps
+    - $PROJECT_ROOT/templates
+template_loaders:
+    - djaml.filesystem
+    - django.template.loaders.filesystem.Loader
+    - django.template.loaders.app_directories.Loader
+installed_apps:
+    - django_extensions
+    - django.contrib.auth
+    - django.contrib.contenttypes
+    - django.contrib.sessions
+    - django.contrib.sites
+    - django.contrib.messages
+    - django.contrib.staticfiles
+    - django.contrib.admin
+</code></pre>
