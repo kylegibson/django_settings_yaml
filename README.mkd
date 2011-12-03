@@ -26,10 +26,6 @@ A "pythonpath" list can be provided within the yaml. Paths will be appended to s
 
 Provide a context dictionary to specify how to process template variables within the document.
 
-#### Automatic uppercasing
-
-The loader will automatically uppercase all dictionary keys.
-
 #### Keep your secret_key secret
 
 Instead of specifying a SECRET_KEY in your settings, you can specify a SECRET_KEY_FILE. This is a path
@@ -49,36 +45,36 @@ to a file that contains your secret key. If it doesn't exist, a new one is gener
 
 #### Create a settings.yaml
 
-    pythonpath:
-      - $PROJECT_ROOT/apps
-    debug: False
-    secret_key_file: $PROJECT_ROOT/SECRET_KEY
-    root_urlconf: urls
-    databases:
+    PYTHONPATH:
+        - $PROJECT_ROOT/apps
+    DEBUG: False
+    SECRET_KEY_FILE: $PROJECT_ROOT/SECRET_KEY
+    ROOT_URLCONF: urls
+    DATABASES:
         default:
-            engine: django.db.backends.sqlite3
-            name: db/dev.db
-    time_zone: America/Detroit
-    site_id: 1
-    use_i18n: False
-    # use_l10n: False
-    static_root: $PROJECT_ROOT/staticroot
-    static_url: /static/
-    admin_media_prefix: /static/admin/
-    short_date_format: Y-m-d
-    staticfiles_dirs:
+            ENGINE: django.db.backends.sqlite3
+            NAME: db/dev.db
+    TIME_ZONE: America/Detroit
+    SITE_ID: 1
+    USE_I18N: False
+    # USE_L10N: False
+    STATIC_ROOT: $PROJECT_ROOT/staticroot
+    STATIC_URL: /static/
+    ADMIN_MEDIA_PREFIX: /static/admin/
+    SHORT_DATE_FORMAT: Y-m-d
+    STATICFILES_DIRS:
         - $PROJECT_ROOT/static
-    staticfiles_finders:
+    STATICFILES_FINDERS:
         - django.contrib.staticfiles.finders.FileSystemFinder
         - django.contrib.staticfiles.finders.AppDirectoriesFinder
-    template_dirs:
+    TEMPLATE_DIRS:
         - $PROJECT_ROOT/apps
         - $PROJECT_ROOT/templates
-    template_loaders:
+    TEMPLATE_LOADERS:
         - djaml.filesystem
         - django.template.loaders.filesystem.Loader
         - django.template.loaders.app_directories.Loader
-    installed_apps:
+    INSTALLED_APPS:
         - django_extensions
         - django.contrib.auth
         - django.contrib.contenttypes
@@ -87,3 +83,4 @@ to a file that contains your secret key. If it doesn't exist, a new one is gener
         - django.contrib.messages
         - django.contrib.staticfiles
         - django.contrib.admin
+        - south
